@@ -1,0 +1,117 @@
+
+Basic Python
+
+1. Split this string
+
+[ ]
+
+s = "Hi there Sam!"
+
+[ ]
+
+x=s.split()
+print(x)
+
+['Hi', 'there', 'Sam!'] 
+
+2. Use .format() to print the following string.
+
+Output should be: The diameter of Earth is 12742 kilometers.
+
+[ ]
+
+planet = "Earth"
+diameter = 12742
+
+[ ]
+
+print("the diameter of"+planet+"is",diameter,"kilometers")
+
+the diameter ofEarthis 12742 kilometers 
+
+[ ]
+
+d = {'k1':[1,2,3,{'tricky':['oh','man','inception',{'target':[1,2,3,'hello']}]}]}
+
+[ ]
+
+print(d['k1'][3]['tricky'][3]['target'][3])
+
+hello 
+
+Numpy
+
+[ ]
+
+import numpy as np
+
+4.1 Create an array of 10 zeros?
+
+4.2 Create an array of 10 fives?
+
+[ ]
+
+array=np.zeros(10)
+print("An array of 10 zeros")
+print(array)
+
+An array of 10 zeros [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.] 
+
+[ ]
+
+array=np.ones(10)*5
+print("An array of 10 fives")
+print(array)
+
+An array of 10 fives [5. 5. 5. 5. 5. 5. 5. 5. 5. 5.] 
+
+5. Create an array of all the even integers from 20 to 35
+
+[ ]
+
+array=np.arange(10,40,2)
+print("Array of all even integer from 20 to 35")
+print(array)
+
+Array of all even integer from 20 to 35 [10 12 14 16 18 20 22 24 26 28 30 32 34 36 38] 
+
+6. Create a 3x3 matrix with values ranging from 0 to 8
+
+[ ]
+
+x=np.arange(0,9).reshape(3,3)
+print(x)
+
+[[0 1 2] [3 4 5] [6 7 8]] 
+
+7. Concatenate a and b
+
+a = np.array([1, 2, 3]), b
+[29/10, 7:32 pm] Nosika: np.array([4, 5, 6])
+
+[ ]
+
+a=np.array([1,2,3])
+b=np.array([4,5,6])
+arr=np.stack((a,b),axis=0)
+print(arr)
+[29/10, 7:32 pm] Nosika: [[1 2 3] [4 5 6]] 
+
+Pandas
+
+8. Create a dataframe with 3 rows and 2 columns
+[29/10, 7:36 pm] Nosika: data=(['jene',11],['anu',12],['vino',13])
+[29/10, 7:36 pm] Nosika: df=pd.DataFrame(data,columns=['name','age'])
+[29/10, 7:36 pm] Nosika: nameage0jene111anu122vino
+[29/10, 7:37 pm] Nosika: Generate the series of dates from 1st Jan, 2023 to 10th Feb, 2023
+
+[ ]
+
+import datetime
+day_delta=datetime.timedelta(days=1)
+start_date=datetime.date(2023,1,1)
+end_date=start_date+41*day_delta
+for i in range((end_date-start_date).days):
+  print(start_date+i*day_delta)
+[29/10, 7:39 pm] Nosika: 2023-01-01 2023-01-02 2023-01-03 2023-01-04 2023-01-05 2023-01-06 2023-01-07 2023-01-08 2023-01-09 2023-01-10 2023-01-11 2023-01-12 2023-01-13 2023-01-14
+[29/10, 7:39 pm] Nosika: 14 2023-01-15 2023-01-16 2023-01-17 2023-01-18 2023-01-19 2023-01-20 2023-01-21 2023-01-22 2023-01-23 2023-01-24 2023-01-25 2023-01-26 2023-01-27 2023-01-28 2023-01-29 2023-01-30 2023-01-31 2023-02-01 2023-02-02 2023-02-03 2023-02-04 2023-02-05 2023-02-06 2023-02-07 2023-02-08 2023-02-09 2023-02-10
