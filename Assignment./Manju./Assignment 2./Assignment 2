@@ -1,0 +1,45 @@
+import pandas as pd
+import numpy as npcm=pd.read_csv("/content/Churn_Modelling.csv")print(cm)
+RowNumber CustomerId Surname CreditScore Geography Gender Age \ 0 1 15634602 Hargrave 619 France Female 42 1 2 15647311 Hill 608 Spain Female 41 2 3 15619304 Onio 502 France Female 42 3 4 15701354 Boni 699 France Female 39 4 5 15737888 Mitchell 850 Spain Female 43 ... ... ... ... ... ... ... ... 9995 9996 15606229 Obijiaku 771 France Male 39 9996 9997 15569892 Johnstone 516 France Male 35 9997 9998 15584532 Liu 709 France Female 36 9998 9999 15682355 Sabbatini 772 Germany Male 42 9999 10000 15628319 Walker 792 France Female 28 Tenure Balance NumOfProducts HasCrCard IsActiveMember \ 0 2 0.00 1 1 1 1 1 83807.86 1 0 1 2 8 159660.80 3 1 0 3 1 0.00 2 0 0 4 2 125510.82 1 1 1 ... ... ... ... ... ... 9995 5 0.00 2 1 0 9996 10 57369.61 1 1 1 9997 7 0.00 1 0 1 9998 3 75075.31 2 1 0 9999 4 130142.79 1 1 0 EstimatedSalary Exited 0 101348.88 1
+112542.58 0 2 113931.57 1 3 93826.63 0 4 79084.10 0 ... ... ... 9995 96270.64 0 9996 101699.77 0 9997 42085.58 1 9998 92888.52 1 9999 38190.78 0 [10000 rows x 14 columns]
+cm.info()
+<class 'pandas.core.frame.DataFrame'> RangeIndex: 10000 entries, 0 to 9999 Data columns (total 14 columns): # Column Non-Null Count Dtype --- ------ -------------- ----- 0 RowNumber 10000 non-null int64 1 CustomerId 10000 non-null int64 2 Surname 10000 non-null object 3 CreditScore 10000 non-null int64 4 Geography 10000 non-null object 5 Gender 10000 non-null object 6 Age 10000 non-null int64 7 Tenure 10000 non-null int64 8 Balance 10000 non-null float64 9 NumOfProducts 10000 non-null int64 10 HasCrCard 10000 non-null int64 11 IsActiveMember 10000 non-null int64 12 EstimatedSalary 10000 non-null float64 13 Exited 10000 non-null int64 dtypes: float64(2), int64(9), object(3) memory usage: 1.1+ MB
+cm.describe()
+RowNumberCustomerIdCreditScoreAgeTenureBalanceNumOfProductsHasCrCardIsActiveMemberEstimatedSalaryExitedcount10000.000001.000000e+0410000.00000010000.00000010000.00000010000.00000010000.00000010000.0000010000.00000010000.00000010000.000000mean5000.500001.569094e+07650.52880038.9218005.01280076485.8892881.5302000.705500.515100100090.2398810.203700std2886.895687.193619e+0496.65329910.4878062.89217462397.4052020.5816540.455840.49979757510.4928180.402769min1.000001.556570e+07350.00000018.0000000.0000000.0000001.0000000.000000.00000011.5800000.00000025%2500.750001.562853e+07584.00000032.0000003.0000000.0000001.0000000.000000.00000051002.1100000.00000050%5000.500001.569074e+07652.00000037.0000005.00000097198.5400001.0000001.000001.000000100193.9150000.00000075%7500.250001.575323e+07718.00000044.0000007.000000127644.2400002.0000001.000001.000000149388.2475000.000000max10000.000001.581569e+07850.000000
+import matplotlib.pyplot as plt
+import seaborn as sns
+import math
+cm.isna().sum()
+RowNumber 0 CustomerId 0 Surname 0 CreditScore 0 Geography 0 Gender 0 Age 0 Tenure 0 Balance 0 NumOfProducts 0 HasCrCard 0 IsActiveMember 0 EstimatedSalary 0 Exited 0 dtype: int64
+sns.histplot(cm.EstimatedSalary,kde=True)
+<matplotlib.axes._subplots.AxesSubplot at 0x7fee719ba7d0>
+
+￼
+sns.scatterplot(cm.Balance,cm.EstimatedSalary)
+plt.ylim(0,20000)
+usr/local/lib/python3.7/dist-packages/seaborn/_decorators.py:43: FutureWarning: Pass the following variables as keyword args: x, y. From version 0.12, the only valid positional argument will be `data`, and passing other arguments without an explicit keyword will result in an error or misinterpretation. FutureWarning 
+
+(0.0, 20000.0)
+FutureWarning 
+
+(0.0, 20000.0)
+cm.columns
+Index(['RowNumber', 'CustomerId', 'Surname', 'CreditScore', 'Geography', 'Gender', 'Age', 'Tenure', 'Balance', 'NumOfProducts', 'HasCrCard', 'IsActiveMember', 'EstimatedSalary', 'Exited'], dtype='object')
+
+[ ]
+
+x=cm.iloc[:,0:-1].values
+y=cm.iloc[:,-1].values
+
+[ ]
+
+from sklearn.model_selection import train_test_split
+
+[ ]
+
+x_train,x_test,y_train,y_test=train_test_split(x,y,test_size=0.2)
+
+[ ]
+
+from sklearn.preprocessing import StandardScaler
+sc=StandardScaler()
