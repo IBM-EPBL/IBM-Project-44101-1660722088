@@ -1,0 +1,122 @@
+
+
+[ ]
+
+import csv
+import tensorflow as tf
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from tensorflow.keras.preprocessing.text import Tokenizer
+from tensorflow.keras.preprocessing.sequence import pad_sequences
+import nltk
+nltk.download('stopwords')  
+from nltk.corpus import stopwords
+STOPWORDS = set(stopwords.words('english'))
+
+[nltk_data] Downloading package stopwords to /root/nltk_data... [nltk_data] Unzipping corpora/stopwords.zip. 
+
+Import dataset
+
+[ ]
+
+import io
+dataset = pd.read_csv(io.BytesIO(uploaded['spam.csv']), encoding = "ISO-8859-1")
+
+[ ]
+
+dataset
+
+[ ]
+
+vocab_size = 5000
+embedding_dim = 64
+max_length = 200
+trunc_type = 'post'
+padding_type = 'post'
+oov_tok = '<OOV>'
+training_portion = .8
+
+Read the dataset and do pre-processing.
+To remove the stop words.
+
+[ ]
+
+articles = []
+labels = []
+
+with open("spam.csv", 'r', encoding = "ISO-8859-1") as dataset:
+    reader = csv.reader(dataset, delimiter=',')
+    next(reader)
+    for row in reader:
+        labels.append(row[0])
+        article = row[1]
+        for word in STOPWORDS:
+            token = ' ' + word + ' '
+            article = article.replace(token, ' ')
+            article = article.replace(' ', ' ')
+        articles.append(article)
+print(len(labels))
+print(len(articles))
+
+5572 5572 
+
+Train the model
+
+[ ]
+
+train_size = int(len(articles) * training_portion)
+
+train_articles = articles[0: train_size]
+train_labels = labels[0: train_size]
+
+validation_articles = articles[train_size:]
+validation_labels = labels[train_size:]
+
+print(train_size)
+print(len(train_articles))
+print(len(train_labels))
+print(len(validation_articles))
+print(len(validation_labels))
+
+4457 4457 4457 1115 1115 
+
+[ ]
+
+tokenizer = Tokenizer(num_words = vocab_size, oov_token=oov_tok)
+tokenizer.fit_on_texts(train_articles)
+word_index = tokenizer.word_index
+dict(list(word_index.items())[0:10])
+
+{'<OOV>': 1, 'i': 2, 'u': 3, 'call': 4, 'you': 5, '2': 6, 'get': 7, "i'm": 8, 'ur': 9, 'now': 10}
+
+Traning data to Sequences
+
+[ ]
+
+train_sequences = tokenizer.texts_to_sequences(train_articles)
+print(train_sequences[10])
+
+[8, 189, 37, 201, 30, 260, 293, 991, 222, 53, 153, 3815, 423, 46] 
+
+Train neural network for NLP
+
+[ ]
+
+train_padded = pad_sequences(train_sequences, maxlen=max_length, padding=padding_type, truncating=trunc_type)
+print(len(train_sequences[0]))
+print(len(train_padded[0]))
+
+print(len(train_sequences[1]))
+print(len(train_padded[1]))
+
+print(len(train_sequences[10]))
+print(len(train_padded[10]))
+
+16 200 6 200 14 200 
+
+[ ]
+
+print(train_padded[10])
+
+[ 8 189 37 201 30 260 293 991 222 53 153 3815 423 46 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
