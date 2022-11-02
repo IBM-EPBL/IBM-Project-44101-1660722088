@@ -1,11 +1,4 @@
 
-from google.colab import files
-uploaded = files.upload()
-
-Import required libraries
-
-[ ]
-
 import csv
 import tensorflow as tf
 import pandas as pd
